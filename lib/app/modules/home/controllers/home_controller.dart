@@ -3,7 +3,9 @@ import 'package:very_good_coffee_app/app/modules/home/controllers/states/home_st
 
 class HomeController {
   final _state = RxNotifier<HomeStates>(const HomeLoadingState());
+  final _isLoadingNewImages = RxNotifier<bool>(true);
 
   // Getters and Setters
   HomeStates get state$ => _state.value;
+  bool get isLoadingNewImages => _isLoadingNewImages.value;
 }
