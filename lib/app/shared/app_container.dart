@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:very_good_coffee_app/app/data/coffee_repository.dart';
+import 'package:very_good_coffee_app/app/modules/home/controllers/home_controller.dart';
 
 abstract class Dependencies {
   void setup();
@@ -23,6 +24,10 @@ class AppContainer implements Dependencies {
       () => CoffeeRepositoryImpl(
         I.get<Dio>(),
       ),
+    );
+
+    I.registerLazySingleton<HomeController>(
+      () => HomeController(),
     );
   }
 }

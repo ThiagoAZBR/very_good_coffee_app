@@ -3,5 +3,6 @@ class HomeConstants {
   static const String favorites = 'Favorites';
   static const String newImages = 'New Images';
   static const String next = 'Next';
-  static const String errorMessage = 'There was a problem to load your coffee =(';
+  static const String errorMessage =
+      'Sorry, there was a problem to load your coffee =(';
 }

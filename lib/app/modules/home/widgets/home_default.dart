@@ -8,12 +8,14 @@ class HomeDefault extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
           HomeConstants.title,
-          style: AppTextStyles.big(),
+          style: AppTextStyles.big(fontWeight: FontWeight.bold),
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             ElevatedButton(
               onPressed: () {},

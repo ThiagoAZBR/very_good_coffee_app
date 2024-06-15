@@ -5,12 +5,8 @@ class HomeLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: <Widget>[
-        Center(
-          child: CircularProgressIndicator(),
-        )
-      ],
+    return const Center(
+      child: CircularProgressIndicator(),
     );
   }
 }

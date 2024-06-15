@@ -7,15 +7,12 @@ class HomeError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Center(
-          child: Text(
-            HomeConstants.errorMessage,
-            style: AppTextStyles.big(),
-          ),
-        ),
-      ],
+    return Center(
+      child: Text(
+        HomeConstants.errorMessage,
+        style: AppTextStyles.big(),
+        textAlign: TextAlign.center,
+      ),
     );
   }
 }
