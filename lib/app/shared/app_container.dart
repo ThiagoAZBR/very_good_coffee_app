@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:very_good_coffee_app/app/data/coffee_repository.dart';
+import 'package:very_good_coffee_app/app/domain/usecases/get_coffee_image.dart';
 import 'package:very_good_coffee_app/app/modules/home/controllers/home_controller.dart';
 
 abstract class Dependencies {
@@ -26,8 +27,16 @@ class AppContainer implements Dependencies {
       ),
     );
 
+    I.registerLazySingleton<GetCoffeeImageUseCase>(
+      () => GetCoffeeImageUseCase(
+        I.get<CoffeeRepository>(),
+      ),
+    );
+
     I.registerLazySingleton<HomeController>(
-      () => HomeController(),
+      () => HomeController(
+        getCoffeeImageUseCase: I.get<GetCoffeeImageUseCase>(),
+      ),
     );
   }
 }

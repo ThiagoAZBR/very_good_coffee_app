@@ -3,7 +3,10 @@ abstract class HomeStates {
 }
 
 class HomeDefaultState implements HomeStates {
-  const HomeDefaultState();
+  final String? imageUrl;
+  const HomeDefaultState({
+    this.imageUrl,
+  });
 }
 
 class HomeErrorState implements HomeStates {
