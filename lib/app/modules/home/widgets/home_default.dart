@@ -6,6 +6,8 @@ import 'package:very_good_coffee_app/app/modules/home/controllers/states/home_st
 import 'package:very_good_coffee_app/app/shared/themes/app_colors.dart';
 import 'package:very_good_coffee_app/app/shared/themes/app_text_styles.dart';
 
+import '../../../shared/widgets/app_button.dart';
+
 class HomeDefault extends StatefulWidget {
   final HomeController controller;
   const HomeDefault({
@@ -51,29 +53,11 @@ class _HomeDefaultState extends State<HomeDefault> {
           Align(
             alignment: Alignment.centerLeft,
             child: FittedBox(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                ),
-                onPressed: widget.controller.setHomeFavoritesCoffeeImages,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.bookmark_outline_rounded,
-                        color: AppColors.secondary,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        HomeConstants.favorites,
-                        style: AppTextStyles.medium(),
-                      ),
-                    ],
-                  ),
-                ),
+              child: AppButton(
+                onTap: widget.controller.setHomeFavoritesCoffeeImages,
+                text: HomeConstants.myImages,
+                iconData: Icons.bookmark_outline_rounded,
+                textStyle: AppTextStyles.medium(),
               ),
             ),
           ),
@@ -105,54 +89,18 @@ class _HomeDefaultState extends State<HomeDefault> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                ),
-                onPressed: () async => await widget.controller
+              AppButton(
+                onTap: () async => await widget.controller
                     .addImageToFavorites(state.coffeeModel!.file),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.favorite_outline_rounded,
-                        color: AppColors.secondary,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        HomeConstants.saveImage,
-                        style: AppTextStyles.medium(),
-                      ),
-                    ],
-                  ),
-                ),
+                text: HomeConstants.saveImage,
+                iconData: Icons.favorite_outline_rounded,
+                textStyle: AppTextStyles.medium(),
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                ),
-                onPressed: widget.controller.getCoffeeImage,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.arrow_right_alt_rounded,
-                        color: AppColors.secondary,
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        HomeConstants.next,
-                        style: AppTextStyles.medium(),
-                      ),
-                    ],
-                  ),
-                ),
+              AppButton(
+                onTap: widget.controller.getCoffeeImage,
+                text: HomeConstants.next,
+                iconData: Icons.arrow_right_alt_rounded,
+                textStyle: AppTextStyles.medium(),
               ),
             ],
           )

@@ -3,6 +3,7 @@ import 'package:very_good_coffee_app/app/domain/models/coffee.dart';
 import 'package:very_good_coffee_app/app/domain/usecases/get_coffee_image.dart';
 import 'package:very_good_coffee_app/app/domain/usecases/usecase.dart';
 import 'package:very_good_coffee_app/app/modules/home/controllers/states/home_states.dart';
+import 'package:very_good_coffee_app/app/shared/exceptions.dart';
 import 'package:very_good_coffee_app/app/shared/local_db/local_db.dart';
 import 'package:very_good_coffee_app/app/shared/local_db/local_db_constants.dart';
 
@@ -39,7 +40,8 @@ class HomeController {
           );
         }
         favoriteImages.add(url);
-        await _localDB.put(LocalDBConstants.favoriteCoffeeImages, favoriteImages);
+        await _localDB.put(
+            LocalDBConstants.favoriteCoffeeImages, favoriteImages);
 
         return setHomeDefault(
           CoffeeModel(
@@ -74,15 +76,24 @@ class HomeController {
   void setHomeLoading() {
     _state.value = const HomeLoadingState();
   }
+
   void setHomeError([Exception? exception]) {
-    _state.value = const HomeErrorState();
+    _state.value = HomeErrorState(exception: exception);
   }
+
   void setHomeDefault(CoffeeModel coffeeModel) {
     _state.value = HomeDefaultState(coffeeModel: coffeeModel);
   }
+
   setHomeFavoritesCoffeeImages() {
-    // ToDo: Create exception for when favorite images is empty
-    return _state.value =
-        HomeFavoriteCoffeeImagesState(images: getLocalFavoriteCoffeeImages());
+    final images = getLocalFavoriteCoffeeImages();
+    if (images != null) {
+      _state.value = HomeFavoriteCoffeeImagesState(
+        images: getLocalFavoriteCoffeeImages(),
+      );
+      return;
+    }
+
+    setHomeError(ThereIsNoFavoriteImagesException());
   }
 }

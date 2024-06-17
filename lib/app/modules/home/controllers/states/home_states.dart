@@ -6,21 +6,18 @@ abstract class HomeStates {
 
 class HomeDefaultState implements HomeStates {
   final CoffeeModel? coffeeModel;
-  const HomeDefaultState({
-    this.coffeeModel,
-  });
+  const HomeDefaultState({this.coffeeModel});
 }
 
 class HomeFavoriteCoffeeImagesState implements HomeStates {
   final List<String>? images;
 
-  const HomeFavoriteCoffeeImagesState({
-    this.images,
-  });
+  const HomeFavoriteCoffeeImagesState({this.images});
 }
 
 class HomeErrorState implements HomeStates {
-  const HomeErrorState();
+  final Exception? exception;
+  const HomeErrorState({this.exception});
 }
 
 class HomeLoadingState implements HomeStates {

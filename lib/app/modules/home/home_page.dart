@@ -39,7 +39,9 @@ class _HomePageState extends State<HomePage> {
         controller: controller,
       ),
       const HomeLoadingState().toString(): const HomeLoading(),
-      const HomeErrorState().toString(): const HomeError(),
+      const HomeErrorState().toString(): HomeError(
+        controller: controller,
+      ),
     };
     return AppScaffold(
       child: RxBuilder(
