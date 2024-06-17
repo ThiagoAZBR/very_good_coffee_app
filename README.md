@@ -17,7 +17,7 @@ The API that was used: [Coffee API - AlexFlipnote](https://github.com/AlexFlipno
 
 The App was build using [Clean Arch](https://github.com/Flutterando/Clean-Dart/blob/master/README_en.md) in mind with some functional programming with the package [fpdart](https://pub.dev/packages/fpdart). 
 
-To deal with the state management was used some native tools like valueNotifier but with the package [rx_notifier](https://pub.dev/packages/rx_notifier) that enhances this native feat.
+To deal with the state management was used a native tool called valueNotifier but with the package [rx_notifier](https://pub.dev/packages/rx_notifier) that enhances this native feat.
 
 In the dependencies, to deal with some concepts like dependency injection was used [get_it](https://pub.dev/packages/get_it).
 
@@ -53,7 +53,7 @@ Replace path_to_your_flutter_project with the actual path where your Flutter pro
 
 #### Run Tests:
 
-To execute all tests (both unit and widget tests), use the following command:
+To execute all tests (unit tests), use the following command:
 ```bash
 flutter test
 ```
