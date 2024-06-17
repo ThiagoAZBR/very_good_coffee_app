@@ -28,7 +28,7 @@ class HomeController {
   bool get isLoadingNewImages => _isLoadingNewImages.value;
 
   setHomeLoading() => _state.value = const HomeLoadingState();
-  setHomeError(Exception? exception) => _state.value = const HomeErrorState();
+  setHomeError([Exception? exception]) => _state.value = const HomeErrorState();
   setHomeDefault(CoffeeModel coffeeModel) =>
       _state.value = HomeDefaultState(imageUrl: coffeeModel.file);
 }
