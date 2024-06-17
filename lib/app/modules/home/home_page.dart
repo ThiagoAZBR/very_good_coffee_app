@@ -4,6 +4,7 @@ import 'package:very_good_coffee_app/app/modules/home/controllers/home_controlle
 import 'package:very_good_coffee_app/app/modules/home/controllers/states/home_states.dart';
 import 'package:very_good_coffee_app/app/modules/home/widgets/home_default.dart';
 import 'package:very_good_coffee_app/app/modules/home/widgets/home_error.dart';
+import 'package:very_good_coffee_app/app/modules/home/widgets/home_favorite_coffee_images.dart';
 import 'package:very_good_coffee_app/app/modules/home/widgets/home_loading.dart';
 import 'package:very_good_coffee_app/app/shared/widgets/app_scaffold.dart';
 
@@ -31,6 +32,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final Map mapBuilder = {
       const HomeDefaultState().toString(): HomeDefault(
+        controller: controller,
+      ),
+      const HomeFavoriteCoffeeImagesState().toString():
+          HomeFavoriteCoffeeImages(
         controller: controller,
       ),
       const HomeLoadingState().toString(): const HomeLoading(),

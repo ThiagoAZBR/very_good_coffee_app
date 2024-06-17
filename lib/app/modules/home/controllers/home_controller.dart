@@ -22,21 +22,40 @@ class HomeController {
     );
   }
 
-  List<String>? getFavoriteCoffeeImages() =>
+  List<String>? getLocalFavoriteCoffeeImages() =>
       _localDB.getListString(LocalDBConstants.favoriteCoffeeImages);
 
   Future<void> addImageToFavorites(String url) async {
+    setHomeLoading();
     try {
-      setHomeLoading();
-      final favoriteImages = getFavoriteCoffeeImages();
+      final favoriteImages = getLocalFavoriteCoffeeImages();
       if (favoriteImages != null) {
+        if (favoriteImages.any((e) => e == url)) {
+          return setHomeDefault(
+            CoffeeModel(
+              file: url,
+              isFavoriteCoffee: true,
+            ),
+          );
+        }
         favoriteImages.add(url);
-        _localDB.put(LocalDBConstants.favoriteCoffeeImages, favoriteImages);
-        return getCoffeeImage();
+        await _localDB.put(LocalDBConstants.favoriteCoffeeImages, favoriteImages);
+
+        return setHomeDefault(
+          CoffeeModel(
+            file: url,
+            isFavoriteCoffee: true,
+          ),
+        );
       }
 
-      _localDB.put(LocalDBConstants.favoriteCoffeeImages, [url]);
-      return getCoffeeImage();
+      await _localDB.put(LocalDBConstants.favoriteCoffeeImages, [url]);
+      return setHomeDefault(
+        CoffeeModel(
+          file: url,
+          isFavoriteCoffee: true,
+        ),
+      );
     } catch (e) {
       setHomeError();
     }
@@ -52,8 +71,18 @@ class HomeController {
   HomeStates get state$ => _state.value;
   bool get isLoadingNewImages => _isLoadingNewImages.value;
 
-  setHomeLoading() => _state.value = const HomeLoadingState();
-  setHomeError([Exception? exception]) => _state.value = const HomeErrorState();
-  setHomeDefault(CoffeeModel coffeeModel) =>
-      _state.value = HomeDefaultState(imageUrl: coffeeModel.file);
+  void setHomeLoading() {
+    _state.value = const HomeLoadingState();
+  }
+  void setHomeError([Exception? exception]) {
+    _state.value = const HomeErrorState();
+  }
+  void setHomeDefault(CoffeeModel coffeeModel) {
+    _state.value = HomeDefaultState(coffeeModel: coffeeModel);
+  }
+  setHomeFavoritesCoffeeImages() {
+    // ToDo: Create exception for when favorite images is empty
+    return _state.value =
+        HomeFavoriteCoffeeImagesState(images: getLocalFavoriteCoffeeImages());
+  }
 }

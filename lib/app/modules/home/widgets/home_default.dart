@@ -6,12 +6,35 @@ import 'package:very_good_coffee_app/app/modules/home/controllers/states/home_st
 import 'package:very_good_coffee_app/app/shared/themes/app_colors.dart';
 import 'package:very_good_coffee_app/app/shared/themes/app_text_styles.dart';
 
-class HomeDefault extends StatelessWidget {
+class HomeDefault extends StatefulWidget {
   final HomeController controller;
   const HomeDefault({
     super.key,
     required this.controller,
   });
+
+  @override
+  State<HomeDefault> createState() => _HomeDefaultState();
+}
+
+class _HomeDefaultState extends State<HomeDefault> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (state.coffeeModel!.isFavoriteCoffee) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: AppColors.secondary,
+            content: Text(
+              HomeConstants.successMessage,
+              style: AppTextStyles.medium(color: AppColors.primary),
+            ),
+          ),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,21 +55,21 @@ class HomeDefault extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                 ),
-                onPressed: () {},
+                onPressed: widget.controller.setHomeFavoritesCoffeeImages,
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        HomeConstants.favorites,
-                        style: AppTextStyles.medium(),
-                      ),
-                      const SizedBox(width: 4),
                       const Icon(
                         Icons.bookmark_outline_rounded,
                         color: AppColors.secondary,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        HomeConstants.favorites,
+                        style: AppTextStyles.medium(),
                       ),
                     ],
                   ),
@@ -61,22 +84,24 @@ class HomeDefault extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: CachedNetworkImage(
-                imageUrl: state.imageUrl!,
-                placeholder: (_, url) => Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 64),
-                  height: 32,
-                  width: 32,
-                  child: const CircularProgressIndicator(
-                    color: AppColors.secondary,
-                  ),
-                ),
-                errorListener: (_) => controller.setHomeError(),
-              ),
+              child: (state.coffeeModel!.isFavoriteCoffee)
+                  ? CachedNetworkImage(
+                      imageUrl: state.coffeeModel!.file,
+                      placeholder: (_, url) => const ImagePlaceholder(),
+                      errorListener: (_) => widget.controller.setHomeError(),
+                    )
+                  : Image.network(
+                      state.coffeeModel!.file,
+                      loadingBuilder: (_, child, progress) =>
+                          (progress == null) ? child : const ImagePlaceholder(),
+                      errorBuilder: (_, error, __) {
+                        widget.controller.setHomeError();
+                        return const SizedBox();
+                      },
+                    ),
             ),
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -84,22 +109,22 @@ class HomeDefault extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                 ),
-                onPressed: () async =>
-                    await controller.addImageToFavorites(state.imageUrl!),
+                onPressed: () async => await widget.controller
+                    .addImageToFavorites(state.coffeeModel!.file),
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        HomeConstants.bookmark,
-                        style: AppTextStyles.medium(),
-                      ),
-                      const SizedBox(width: 4),
                       const Icon(
                         Icons.favorite_outline_rounded,
                         color: AppColors.secondary,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        HomeConstants.saveImage,
+                        style: AppTextStyles.medium(),
                       ),
                     ],
                   ),
@@ -109,22 +134,22 @@ class HomeDefault extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                 ),
-                onPressed: controller.getCoffeeImage,
+                onPressed: widget.controller.getCoffeeImage,
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      const Icon(
+                        Icons.arrow_right_alt_rounded,
+                        color: AppColors.secondary,
+                      ),
+                      const SizedBox(width: 8),
                       Text(
                         HomeConstants.next,
                         style: AppTextStyles.medium(),
                       ),
-                      const SizedBox(width: 4),
-                      const Icon(
-                        Icons.navigate_next_rounded,
-                        color: AppColors.secondary,
-                      )
                     ],
                   ),
                 ),
@@ -136,5 +161,21 @@ class HomeDefault extends StatelessWidget {
     );
   }
 
-  HomeDefaultState get state => controller.state$ as HomeDefaultState;
+  HomeDefaultState get state => widget.controller.state$ as HomeDefaultState;
+}
+
+class ImagePlaceholder extends StatelessWidget {
+  const ImagePlaceholder({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 64),
+      height: 32,
+      width: 32,
+      child: const CircularProgressIndicator(
+        color: AppColors.secondary,
+      ),
+    );
+  }
 }

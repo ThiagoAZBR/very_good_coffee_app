@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:very_good_coffee_app/app/shared/themes/app_colors.dart';
 
 class AppTextStyles {
-  static TextStyle medium() => const TextStyle(
+  static TextStyle medium({
+    Color color = AppColors.secondary,
+  }) =>
+      TextStyle(
         fontSize: 16,
-        color: AppColors.secondary,
+        color: color,
       );
   static TextStyle big({
     FontWeight fontWeight = FontWeight.normal,

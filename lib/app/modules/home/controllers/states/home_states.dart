@@ -1,11 +1,21 @@
+import 'package:very_good_coffee_app/app/domain/models/coffee.dart';
+
 abstract class HomeStates {
   const HomeStates();
 }
 
 class HomeDefaultState implements HomeStates {
-  final String? imageUrl;
+  final CoffeeModel? coffeeModel;
   const HomeDefaultState({
-    this.imageUrl,
+    this.coffeeModel,
+  });
+}
+
+class HomeFavoriteCoffeeImagesState implements HomeStates {
+  final List<String>? images;
+
+  const HomeFavoriteCoffeeImagesState({
+    this.images,
   });
 }
 
