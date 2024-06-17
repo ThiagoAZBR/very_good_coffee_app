@@ -65,7 +65,7 @@ class HomeDefault extends StatelessWidget {
                 imageUrl: state.imageUrl!,
                 placeholder: (_, url) => Container(
                   margin:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 32),
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 64),
                   height: 32,
                   width: 32,
                   child: const CircularProgressIndicator(
@@ -84,7 +84,8 @@ class HomeDefault extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                 ),
-                onPressed: () {},
+                onPressed: () async =>
+                    await controller.addImageToFavorites(state.imageUrl!),
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
@@ -92,7 +93,7 @@ class HomeDefault extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        HomeConstants.like,
+                        HomeConstants.bookmark,
                         style: AppTextStyles.medium(),
                       ),
                       const SizedBox(width: 4),

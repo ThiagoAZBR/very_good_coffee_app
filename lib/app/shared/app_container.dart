@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:very_good_coffee_app/app/data/coffee_repository.dart';
 import 'package:very_good_coffee_app/app/domain/usecases/get_coffee_image.dart';
 import 'package:very_good_coffee_app/app/modules/home/controllers/home_controller.dart';
+import 'package:very_good_coffee_app/app/shared/local_db/local_db.dart';
 
 abstract class Dependencies {
   void setup();
@@ -33,9 +35,16 @@ class AppContainer implements Dependencies {
       ),
     );
 
+    I.registerSingleton(
+      PrefsImpl(
+        I.get<SharedPreferences>(),
+      ),
+    );
+
     I.registerLazySingleton<HomeController>(
       () => HomeController(
         getCoffeeImageUseCase: I.get<GetCoffeeImageUseCase>(),
+        localDB: I.get<PrefsImpl>(),
       ),
     );
   }

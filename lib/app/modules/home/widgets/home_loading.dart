@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:very_good_coffee_app/app/shared/themes/app_colors.dart';
 
 class HomeLoading extends StatelessWidget {
   const HomeLoading({super.key});
@@ -6,7 +7,9 @@ class HomeLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: CircularProgressIndicator(),
+      child: CircularProgressIndicator(
+        color: AppColors.secondary,
+      ),
     );
   }
 }

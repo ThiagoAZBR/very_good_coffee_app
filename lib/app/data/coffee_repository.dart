@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:very_good_coffee_app/app/domain/models/coffee.dart';
-import 'package:very_good_coffee_app/app/shared/app_urls.dart';
+import 'package:very_good_coffee_app/app/shared/network/app_urls.dart';
 import 'package:very_good_coffee_app/app/shared/exceptions.dart';
 
 abstract class CoffeeRepository {
